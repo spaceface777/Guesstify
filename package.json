@@ -1,13 +1,13 @@
 {
-  "name": "name-that-tune",
+  "name": "guesstify",
   "version": "0.1.0",
-  "homepage": "https://github.com/theRealPadster/name-that-tune",
+  "homepage": "https://github.com/theRealPadster/guesstify",
   "repository": {
     "type": "git",
-    "url": "https://github.com/theRealPadster/name-that-tune.git"
+    "url": "https://github.com/theRealPadster/guesstify.git"
   },
   "bugs": {
-    "url": "https://github.com/theRealPadster/name-that-tune/issues"
+    "url": "https://github.com/theRealPadster/guesstify/issues"
   },
   "scripts": {
     "build": "spicetify-creator",
@@ -34,5 +34,8 @@
     "react-chartjs-2": "^4.2.0",
     "spicetify-creator": "^1.0.10",
     "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "fuse.js": "^6.6.2"
   }
 }

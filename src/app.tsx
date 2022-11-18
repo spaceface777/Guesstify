@@ -1,18 +1,18 @@
-import React from 'react';
-import Game from './pages/Game';
-import Stats from './pages/Stats';
+import React from 'react'
+import Game from './pages/Game'
+import Stats from './pages/Stats'
 
 class App extends React.Component {
   render() {
-    const { location } = Spicetify.Platform.History;
+    const { location } = Spicetify.Platform.History
     // If page state set to stats, render it
-    if (location.pathname === '/name-that-tune/stats') {
-      return <Stats />;
+    if (location.pathname === '/guesstify/stats') {
+      return <Stats />
     } // Otherwise, render the main Game
     else {
-      return <Game />;
+      return <Game />
     }
   }
 }
 
-export default App;
+export default App

@@ -1,4 +1,4 @@
-import { toggleNowPlaying } from '../logic';
+import { toggleNowPlaying } from '../logic'
 
 (async () => {
   while (
@@ -9,29 +9,29 @@ import { toggleNowPlaying } from '../logic';
       Spicetify?.showNotification
     )
   ) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100))
   }
 
-  console.log('running name-that-tune extension');
+  console.log('running guesstify extension')
 
   // Show/hide the now playing info on navigation
-  Spicetify.Platform.History.listen((data: any) => {
-    console.log('History changed', data);
+  Spicetify.Platform.History.listen((data: { pathname: string }) => {
+    console.log('History changed', data)
 
-    const onApp = data.pathname.indexOf('name-that-tune') != -1;
-    toggleNowPlaying(!onApp);
-  });
+    const onApp = data.pathname.indexOf('guesstify') != -1
+    toggleNowPlaying(!onApp)
+  })
 
   function sendToApp(URIs: string[]) {
-    Spicetify.showNotification(`Sending ${URIs.length} URIs to Name That Tune`);
-    console.log('Sending URIs:', URIs);
+    Spicetify.showNotification(`Sending ${URIs.length} URIs to Guesstify`)
+    console.log('Sending URIs:', URIs)
     // example artist: spotify:artist:5k979N1TnPncUyqlXlaRSv
     // example playlist: spotify:playlist:37i9dQZF1DZ06evO38b2WA
 
     URIs.forEach((uri) => {
-      const uriObj = Spicetify.URI.fromString(uri);
-      console.log('uriObj:', uriObj);
-    });
+      const uriObj = Spicetify.URI.fromString(uri)
+      console.log('uriObj:', uriObj)
+    })
 
     // TODO: If artist, add tracks from artist
     // TODO: If album, add tracks from album
@@ -41,16 +41,16 @@ import { toggleNowPlaying } from '../logic';
     // Ooh, I can just use Spicetify.Player.playUri(uri) and it will work with whatever you send it!
 
     Spicetify.Platform.History.push({
-      pathname: '/name-that-tune',
+      pathname: '/guesstify',
       state: {
         URIs,
       },
-    });
+    })
   }
 
   function shouldDisplayContextMenu(URIs: string[]) {
     if (URIs.length === 1) {
-      const uriObj = Spicetify.URI.fromString(URIs[0]);
+      const uriObj = Spicetify.URI.fromString(URIs[0])
       switch (uriObj.type) {
       case Spicetify.URI.Type.SHOW:
       case Spicetify.URI.Type.PLAYLIST:
@@ -59,22 +59,22 @@ import { toggleNowPlaying } from '../logic';
       case Spicetify.URI.Type.ALBUM:
       case Spicetify.URI.Type.COLLECTION:
       case Spicetify.URI.Type.ARTIST:
-        return true;
+        return true
       }
-      return false;
+      return false
     }
     // User selects multiple tracks in a list.
-    return true;
+    return true
   }
 
   const contextMenuItem = new Spicetify.ContextMenu.Item(
-    'Play Name That Tune',
+    'Play Guesstify',
     sendToApp,
     shouldDisplayContextMenu,
-    'gamepad',
+    'gamepad' as Spicetify.ContextMenu.Icon,
     // 'chevron-right',
     // 'play',
-  );
+  )
 
-  contextMenuItem.register();
-})();
+  contextMenuItem.register()
+})()

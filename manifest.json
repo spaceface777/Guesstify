@@ -1,10 +1,9 @@
 {
-  "name": "Name That Tune",
-  "description": "Heardle.app made for Spicetify",
+  "name": "Guesstify",
+  "description": "Heardle for Spotify",
   "preview": "docs/preview.png",
   "readme": "README.md",
   "tags": [
-    "game",
-    "beta"
+    "game"
   ]
 }

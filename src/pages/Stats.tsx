@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -6,18 +6,17 @@ import {
   BarElement,
   Title,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+} from 'chart.js'
+import { Bar } from 'react-chartjs-2'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-import { getLocalStorageDataFromKey } from '../Utils';
-import { stageToTime } from '../logic';
-import { STATS_KEY } from '../constants';
-import Button from '../components/Button';
+import { getLocalStorageDataFromKey } from '../Utils'
+import { stageToTime } from '../logic'
+import { STATS_KEY } from '../constants'
 
-import { SavedStats } from '../types/name-that-tune';
+import { SavedStats } from '../types/guesstify'
 
-import styles from '../css/app.module.scss';
+import styles from '../css/app.module.scss'
 
 ChartJS.register(
   CategoryScale,
@@ -26,45 +25,32 @@ ChartJS.register(
   Title,
   Legend,
   ChartDataLabels,
-);
-
-// ChartJS.defaults.color = '#fff';
-// ChartJS.defaults.backgroundColor = '#fff';
-// ChartJS.defaults.borderColor = '#fff';
+)
 
 class Stats extends React.Component {
-  state = {
-    // // What guess you're on
-    // stage: 0,
-    // // The current guess
-    // guess: '',
-    // // Past guesses
-    // guesses: [],
-    // gameState: GameState.Playing,
-  };
+  state = {}
 
-  constructor(props: any) {
-    super(props);
+  constructor(props: Record<string, unknown>) {
+    super(props)
   }
 
   render() {
-    // const labels = ['1s', '2s', '4s', '7s', '11s', '16s', '>16s', 'gave up'];
-    const savedStats = getLocalStorageDataFromKey(STATS_KEY, {}) as SavedStats;
+    const savedStats = getLocalStorageDataFromKey(STATS_KEY, {}) as SavedStats
     const parsedStats = Object.entries(savedStats)
       .reduce((accum, [key, value]) => {
-        const stage = parseInt(key, 10);
+        const stage = parseInt(key, 10)
         // I pass in -1 when saving if they gave up
         if (stage === -1) {
-          accum['gave up'] = value;
+          accum['gave up'] = value
         } else if (stage > 5) { // >16s
-          const longOnes = accum['>16s'] || 0;
-          accum['>16s'] = longOnes + value;
+          const longOnes = accum['>16s'] || 0
+          accum['>16s'] = longOnes + value
         } else { // stage is 0-5, output seconds
-          const time = stageToTime(stage);
-          accum[`${time}s`] = value;
+          const time = stageToTime(stage)
+          accum[`${time}s`] = value
         }
-        return accum;
-      }, {} as { [key: string]: number });
+        return accum
+      }, {} as { [key: string]: number })
 
     const chartData = {
       labels: Object.keys(parsedStats),
@@ -75,19 +61,15 @@ class Stats extends React.Component {
           backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
       ],
-    };
+    }
 
     const chartOptions = {
       responsive: true,
-      indexAxis: 'y' as const,
+      indexAxis: 'y',
       plugins: {
-        // title: {
-        //   display: true,
-        //   text: 'Chart.js Bar Chart',
-        // },
         legend: {
           display: false,
-          position: 'top' as const,
+          position: 'top',
         },
         datalabels: {
           color: '#fff',
@@ -96,8 +78,8 @@ class Stats extends React.Component {
           offset: 8,
           clip: true,
           formatter: (value) => {
-            if (value == 1) return `${value} song`;
-            return `${value} songs`;
+            if (value == 1) return `${value} song`
+            return `${value} songs`
           },
         },
       },
@@ -106,25 +88,24 @@ class Stats extends React.Component {
           precision: 0,
         },
       },
-      // animation: false,
       animation: {
         duration: 1000,
       },
-    };
+    } as const
 
-    const totalGames = Object.values(savedStats).reduce((accum, value) => accum + value, 0);
-    const winPercentage = 1 - (savedStats['-1'] || 0) / totalGames;
+    const totalGames = Object.values(savedStats).reduce((accum, value) => accum + value, 0)
+    const winPercentage = 1 - (savedStats['-1'] || 0) / totalGames
 
     console.log({
       chartData,
       totalGames,
       winPercentage,
-    });
+    })
 
     return (
       <>
         <div className={styles.container}>
-          <h1 className={styles.title}>{'🎵 Name That Tune'}</h1>
+          <h1 className={styles.title}>{'Guesstify'}</h1>
           <h2>Stats</h2>
           <p>Win percentage: {`${(winPercentage * 100).toFixed(2)}%`}</p>
           <table>
@@ -149,8 +130,8 @@ class Stats extends React.Component {
           <Bar options={chartOptions} data={chartData} />
         </div>
       </>
-    );
+    )
   }
 }
 
-export default Stats;
+export default Stats

@@ -5,17 +5,17 @@
  * @returns The data stored in localStorage, or the fallback value if not found
  */
 export const getLocalStorageDataFromKey = (key: string, fallback?) => {
-  const data = localStorage.getItem(key);
+  const data = localStorage.getItem(key)
 
   if (data) {
     try {
       // If it's json parse it
-      return JSON.parse(data);
+      return JSON.parse(data)
     } catch (err) {
       // If it's just a string or something
-      return data;
+      return data
     }
   } else {
-    return fallback;
+    return fallback
   }
-};
+}

@@ -1,2 +1,2 @@
-export const APP_KEY = 'name-that-tune';
-export const STATS_KEY = `${APP_KEY}:stats`;
+export const APP_KEY = 'guesstify'
+export const STATS_KEY = `${APP_KEY}:stats`

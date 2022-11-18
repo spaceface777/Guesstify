@@ -1,6 +1,6 @@
 {
-  "displayName": "Name That Tune",
-  "nameId": "name-that-tune",
+  "displayName": "Guesstify",
+  "nameId": "guesstify",
   "icon": "css/icon.svg",
   "activeIcon": "css/icon.svg"
 }

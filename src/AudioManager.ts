@@ -1,63 +1,63 @@
 export default class AudioManager {
-  end: number;
-  debouncing: number;
-  DEBOUNCE_TIME = 300;
-  listener: Function;
+  end: number
+  debouncing: number
+  DEBOUNCE_TIME = 300
+  listener: Function
 
   constructor() {
-    this.end = 1;
-    this.debouncing = 0;
+    this.end = 1
+    this.debouncing = 0
     this.listener = (event: Event) => {
-      if (!this.end) return;
+      if (!this.end) return
 
       if (this.debouncing) {
-        console.debug('debouncing');
+        console.debug('debouncing')
         if (event.timeStamp - this.debouncing > this.DEBOUNCE_TIME) {
-          this.debouncing = 0;
-          console.debug('reset debouncing');
+          this.debouncing = 0
+          console.debug('reset debouncing')
         }
-        return;
+        return
       }
 
-      this.debouncing = event.timeStamp;
+      this.debouncing = event.timeStamp
 
       // TODO: calculate and update song length etc on song change
       // Spicetify uses ms
-      const endMillis = this.end * 1000;
-      const songLengthMillis = Spicetify.Player.getDuration();
-      if (endMillis > songLengthMillis) return;
+      const endMillis = this.end * 1000
+      const songLengthMillis = Spicetify.Player.getDuration()
+      if (endMillis > songLengthMillis) return
 
       const currentProgress =
-        songLengthMillis * Spicetify.Player.getProgressPercent();
-      // console.debug({ currentProgress, endMilliseconds: endMillis });
+        songLengthMillis * Spicetify.Player.getProgressPercent()
+      // console.debug({ currentProgress, endMilliseconds: endMillis })
       if (currentProgress > endMillis) {
-        Spicetify.Player.pause();
-        Spicetify.Player.skipBack();
-        return;
+        Spicetify.Player.pause()
+        Spicetify.Player.skipBack()
+        return
       }
-    };
+    }
   }
 
   setEnd(end: number) {
-    this.end = end;
+    this.end = end
   }
 
   listen() {
-    Spicetify.Player.addEventListener('onprogress', this.listener);
+    Spicetify.Player.addEventListener('onprogress', this.listener)
   }
 
   unlisten() {
-    Spicetify.Player.removeEventListener('onprogress', this.listener);
+    Spicetify.Player.removeEventListener('onprogress', this.listener)
   }
 
   play() {
     try {
-      Spicetify.Player.pause();
+      Spicetify.Player.pause()
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
-    Spicetify.Player.skipBack();
-    // Spicetify.Player.seek(0);
-    Spicetify.Player.play();
+    Spicetify.Player.skipBack()
+    // Spicetify.Player.seek(0)
+    Spicetify.Player.play()
   }
 }

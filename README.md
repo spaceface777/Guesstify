@@ -10,7 +10,7 @@ Guesstify is [Heardle](https://www.spotify.com/heardle/) within Spotify, as a [S
   - [Planned Features](#planned-features)
 
 ## Installation
-Download the [dist branch](https://github.com/spaceface777/guesstify/archive/refs/heads/dist.zip) and rename the folder "guesstify". Copy it into the spicetify custom apps folder:
+Download the [latest release](https://github.com/spaceface777/guesstify/releases/latest/download/guesstify.zip) and rename the folder "guesstify". Copy it into the spicetify custom apps folder:
 | **Platform**    | **Path**                               |
 |-----------------|----------------------------------------|
 | **Linux/macOS** | `~/.config/spicetify/CustomApps`       |
